@@ -1,0 +1,37 @@
+name: Build hack.ko for Xiaomi 12T (plato) 5.10.136
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y git build-essential bc bison flex libssl-dev libncurses5-dev libelf-dev gcc-aarch64-linux-gnu
+
+    - name: Clone Xiaomi kernel source
+      run: |
+        git clone https://github.com/MiCode/Xiaomi_Kernel_OpenSource.git --depth=1 --branch=plato-s-oss kernel
+
+    - name: Prepare kernel
+      run: |
+        cd kernel
+        make ARCH=arm64 vendor/xiaomi/plato_defconfig
+        make ARCH=arm64 prepare modules_prepare
+
+    - name: Build module
+      run: |
+        make -C kernel M=$PWD ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: hack.ko
+        path: hack.ko
