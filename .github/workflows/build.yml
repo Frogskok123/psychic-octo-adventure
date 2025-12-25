@@ -16,10 +16,9 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y git build-essential bc bison flex libssl-dev libncurses5-dev libelf-dev gcc-aarch64-linux-gnu
 
-    - name: Download prebuilt 5.10.136 kernel headers
+    - name: Clone AOSP 5.10.136 kernel
       run: |
-        wget -q https://github.com/user-attachments/releases/download/v5.10.136-plato/kernel-5.10.136-plato-headers.zip
-        unzip -q kernel-5.10.136-plato-headers.zip -d kernel
+        git clone --depth=1 https://android.googlesource.com/kernel/common.git -b android12-5.10 kernel
 
     - name: Prepare kernel
       run: |
