@@ -18,7 +18,7 @@ jobs:
 
     - name: Clone Xiaomi 5.10.132 kernel (alioth-s-oss)
       run: |
-        git clone --depth=1 https://github.com/MiCode/Xiaomi_Kernel_OpenSource.git -b alioth-s-oss kernel
+        git clone --depth=1 https://github.com/MiCode/Xiaomi_Kernel_OpenSource.git -b alioth-t-oss kernel
 
     - name: Prepare kernel
       run: |
