@@ -23,7 +23,7 @@ jobs:
     - name: Prepare kernel
       run: |
         cd kernel
-        make ARCH=arm64 vendor/xiaomi/plato_defconfig
+        make ARCH=arm64 vendor/xiaomi/alioth_defconfig
         make ARCH=arm64 prepare modules_prepare
 
     - name: Build module
