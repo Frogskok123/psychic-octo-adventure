@@ -18,7 +18,7 @@ jobs:
 
     - name: Clone Xiaomi kernel source
       run: |
-        git clone https://github.com/MiCode/Xiaomi_Kernel_OpenSource.git --depth=1 --branch=plato-s-oss kernel
+        git clone https://github.com/MiCode/Xiaomi_Kernel_OpenSource.git --depth=1 --branch=plato-s-oss-base kernel
 
     - name: Prepare kernel
       run: |
