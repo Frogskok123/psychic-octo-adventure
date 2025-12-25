@@ -16,10 +16,9 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y git build-essential bc bison flex libssl-dev libncurses5-dev libelf-dev gcc-aarch64-linux-gnu
 
-    - name: Download 5.10.245-dirty plato kernel headers
+    - name: Clone Xiaomi 5.10.132 kernel (alioth-s-oss)
       run: |
-        wget -q https://github.com/user-attachments/files/15937962/kernel-5.10.245-plato-dirty-headers.tar.gz
-        tar -xzf kernel-5.10.245-plato-dirty-headers.tar.gz -C kernel
+        git clone --depth=1 https://github.com/MiCode/Xiaomi_Kernel_OpenSource.git -b alioth-s-oss kernel
 
     - name: Prepare kernel
       run: |
