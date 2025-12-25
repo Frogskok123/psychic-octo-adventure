@@ -31,7 +31,7 @@ jobs:
         make -C kernel M=$PWD ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: hack.ko
         path: hack.ko
