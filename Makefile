@@ -6,7 +6,7 @@ $(MODULE_NAME)-objs := entry.o
 ccflags-y += -fno-stack-protector
 ccflags-y += -O2 -DMODULE -D__KERNEL__
 
-# ОТКЛЮЧАЕМ KASАН правильно
+# ОТКЛЮЧАЕМ KASАН
 ccflags-y += -fno-sanitize=address
 
 all:
@@ -15,4 +15,3 @@ all:
 clean:
 	$(MAKE) -C $(KDIR) M=$(PWD) clean
 	rm -f *.o *.ko *.symvers *.order *.mod* .*.cmd
-
