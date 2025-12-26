@@ -1,4 +1,4 @@
-name: Build hack.ko for 5.10.136-android12
+name: Build hack.ko for exact 5.10.136-android12-9-g70d5edde7d3a
 
 on:
   workflow_dispatch:
@@ -16,14 +16,17 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y git build-essential bc bison flex libssl-dev libncurses5-dev libelf-dev gcc-aarch64-linux-gnu
 
-    - name: Clone AOSP 5.10.136 kernel
+    - name: Clone AOSP android12-5.10 and checkout exact commit
       run: |
-        git clone --depth=1 https://android.googlesource.com/kernel/common.git -b android12-5.10 kernel
+        git clone https://android.googlesource.com/kernel/common.git -b android12-5.10 kernel
+        cd kernel
+        git checkout 70d5edde7d3a
 
+    
     - name: Prepare kernel
       run: |
         cd kernel
-        make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
+        make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- oldconfig
         make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- prepare modules_prepare
 
     - name: Build module
@@ -33,6 +36,5 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: hack-5.10.136.ko
+        name: hack-5.10.136-g70d5edde7d3a.ko
         path: hack.ko
-
