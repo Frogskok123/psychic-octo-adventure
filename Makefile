@@ -2,9 +2,13 @@ MODULE_NAME := hack
 obj-m       := $(MODULE_NAME).o
 $(MODULE_NAME)-objs := entry.o
 
-# базовые флаги для GKI
+# базовые флаги
 ccflags-y += -fno-stack-protector
 ccflags-y += -O2 -DMODULE -D__KERNEL__
+
+# ОТКЛЮЧАЕМ KASAN
+ccflags-y += -fno-sanitize-address
+ccflags-y += -DNO_SANITIZE_ADDRESS
 
 # сборка
 all:
@@ -13,8 +17,4 @@ all:
 clean:
 	$(MAKE) -C $(KDIR) M=$(PWD) clean
 	rm -f *.o *.ko *.symvers *.order *.mod* .*.cmd
-
-help:
-	@echo "make KDIR=/path/to/gki all   -- build module"
-	@echo "make KDIR=/path/to/gki clean -- clean"
 
