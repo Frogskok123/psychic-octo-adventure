@@ -1,4 +1,4 @@
-name: Build hack.ko for Xiaomi 12T (plato) 5.10.245-dirty
+name: Build hack.ko for 5.10.136-android12
 
 on:
   workflow_dispatch:
@@ -33,5 +33,6 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: hack.ko
+        name: hack-5.10.136.ko
         path: hack.ko
+
