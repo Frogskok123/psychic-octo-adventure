@@ -35,4 +35,3 @@ jobs:
       with:
         name: hack-plato-5.10.136.ko
         path: hack.ko
-
