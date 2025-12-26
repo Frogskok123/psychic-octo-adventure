@@ -1,4 +1,4 @@
-name: Build hack.ko for exact 5.10.136-android12-9-g70d5edde7d3a
+name: Build hack.ko for 4.19.312-perf+
 
 on:
   workflow_dispatch:
@@ -11,30 +11,28 @@ jobs:
     - name: Checkout module source
       uses: actions/checkout@v4
 
-    - name: Install dependencies
+    - name: Install clang-17 & lld
       run: |
         sudo apt-get update
-        sudo apt-get install -y git build-essential bc bison flex libssl-dev libncurses5-dev libelf-dev gcc-aarch64-linux-gnu
+        sudo apt-get install -y clang-17 lld llvm
 
-    - name: Clone AOSP android12-5.10 and checkout exact commit
+    - name: Clone AOSP common-android-4.19
       run: |
-        git clone https://android.googlesource.com/kernel/common.git -b android12-5.10 kernel
-        cd kernel
-        git checkout 70d5edde7d3a
+        git clone --depth=1 https://android.googlesource.com/kernel/common.git -b common-android-4.19 kernel
 
-    
     - name: Prepare kernel
       run: |
         cd kernel
-        make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- oldconfig
-        make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- prepare modules_prepare
+        make ARCH=arm64 CC=clang LD=ld.lld defconfig
+        make ARCH=arm64 CC=clang LD=ld.lld prepare modules_prepare
 
     - name: Build module
       run: |
-        make -C kernel M=$PWD ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules
+        make -C kernel M=$PWD ARCH=arm64 CC=clang LD=ld.lld modules
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: hack-5.10.136-g70d5edde7d3a.ko
+        name: hack-4.19.312.ko
         path: hack.ko
+
