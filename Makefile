@@ -16,7 +16,7 @@ ccflags-y += -fno-pie
 ccflags-y += -Wno-unused-result
 ccflags-y += -O2
 ccflags-y += -DMODULE -D__KERNEL__
-ccflags-y += -DNO_VERSION_HASH          # отключаем modversions
+
 
 # цели
 all:
