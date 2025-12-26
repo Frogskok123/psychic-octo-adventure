@@ -16,9 +16,9 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y git build-essential bc bison flex libssl-dev libncurses5-dev libelf-dev gcc-aarch64-linux-gnu
 
-    - name: Clone Xiaomi 12T kernel source
+    - name: Clone AOSP 5.10.136 kernel
       run: |
-        git clone --depth=1 https://github.com/MiCode/Xiaomi_Kernel_OpenSource.git -b bsp-plato-s-oss kernel
+        git clone --depth=1 https://android.googlesource.com/kernel/common.git -b android12-5.10 kernel
 
     - name: Prepare kernel
       run: |
