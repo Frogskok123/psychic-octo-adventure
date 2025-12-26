@@ -1,33 +1,21 @@
-# hack.mk  --  полный Makefile для сборки hack.ko
-# под ядро 5.10.136-android12 (AOSP common android12-5.10)
-
-# имя модуля
+# hack.mk  --  4.19.312-perf+, clang-17, lld
 MODULE_NAME := hack
-
-# объекты
+obj-m       := $(MODULE_NAME).o
 $(MODULE_NAME)-objs := entry.o
 
-# сборка модуля
-obj-m := $(MODULE_NAME).o
-
-# флаги компиляции
+# флаги для 4.19 + clang
 ccflags-y += -fno-stack-protector
-ccflags-y += -fno-pie
-ccflags-y += -Wno-unused-result
-ccflags-y += -O2
-ccflags-y += -DMODULE -D__KERNEL__
+ccflags-y += -O2 -DMODULE -D__KERNEL__
 
-
-# цели
+# сборка
 all:
-	$(MAKE) -C $(KDIR) M=$(PWD) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules
+	$(MAKE) -C $(KDIR) M=$(PWD) ARCH=arm64 CC=clang LD=ld.lld modules
 
 clean:
 	$(MAKE) -C $(KDIR) M=$(PWD) clean
 	rm -f *.o *.ko *.symvers *.order *.mod* .*.cmd
 
 help:
-	@echo "usage:"
-	@echo "  make KDIR=/path/to/kernel all   -- build module"
-	@echo "  make KDIR=/path/to/kernel clean -- clean"
+	@echo "make KDIR=/path/to/4.19.312 all   -- build"
+	@echo "make KDIR=/path/to/4.19.312 clean -- clean"
 
