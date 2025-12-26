@@ -6,8 +6,8 @@ $(MODULE_NAME)-objs := entry.o
 ccflags-y += -fno-stack-protector
 ccflags-y += -O2 -DMODULE -D__KERNEL__
 
-# ОТКЛЮЧАЕМ KASAN
-ccflags-y += -fno-sanitize-address
+# ОТКЛЮЧАЕМ KASAN (правильный синтаксис)
+ccflags-y += -fno-sanitize=address
 ccflags-y += -DNO_SANITIZE_ADDRESS
 
 # сборка
